@@ -1,6 +1,8 @@
 using MagicVilla_VillaAPI;
 using MagicVilla_VillaAPI.Data;
 using MagicVilla_VillaAPI.Logging;
+using MagicVilla_VillaAPI.Repository;
+using MagicVilla_VillaAPI.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -14,6 +16,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 
 // Add AutoMapper Configuration to the Services
 builder.Services.AddAutoMapper(typeof(MappingConfig));
+
+// Add IVillaRepository to the Services
+builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 
 // Serilog Configuration
 //Log.Logger = new LoggerConfiguration().MinimumLevel.Information().WriteTo.File("log/villaLogs.txt", rollingInterval: RollingInterval.Day).CreateLogger();
