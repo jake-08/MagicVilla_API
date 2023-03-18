@@ -20,6 +20,9 @@ builder.Services.AddAutoMapper(typeof(MappingConfig));
 // Add IVillaRepository to the Services
 builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 
+// Add IVillaNumberRepository to the Services
+builder.Services.AddScoped<IVillaNumberRepository, VillaNumberRepository>();
+
 // Serilog Configuration
 //Log.Logger = new LoggerConfiguration().MinimumLevel.Information().WriteTo.File("log/villaLogs.txt", rollingInterval: RollingInterval.Day).CreateLogger();
 //builder.Host.UseSerilog();
