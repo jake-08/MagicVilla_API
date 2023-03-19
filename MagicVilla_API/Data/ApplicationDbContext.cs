@@ -37,7 +37,7 @@ namespace MagicVilla_API.Data
                     Occupancy = 4,
                     Rate = 250,
                     Sqft = 1000,
-                    Amenity = "Free Drinks",
+                    Amenity = "Free Beer",
                     CreatedDate = DateTime.Now,
                 },
                 new Villa
@@ -49,7 +49,7 @@ namespace MagicVilla_API.Data
                     Occupancy = 2,
                     Rate = 150,
                     Sqft = 650,
-                    Amenity = "Free Drinks",
+                    Amenity = "Free Snacks",
                     CreatedDate = DateTime.Now,
                 },
                 new Villa
@@ -61,7 +61,7 @@ namespace MagicVilla_API.Data
                     Occupancy = 4,
                     Rate = 350,
                     Sqft = 900,
-                    Amenity = "Free Drinks",
+                    Amenity = "Free Massage",
                     CreatedDate = DateTime.Now,
                 },
                 new Villa

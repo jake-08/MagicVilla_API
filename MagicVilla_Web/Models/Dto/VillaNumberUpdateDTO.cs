@@ -1,18 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace MagicVilla_Web.Models.Dto
 {
     public class VillaNumberUpdateDTO
     {
         [Required]
+        [DisplayName("Villa Number")]
         public int VillaNo { get; set; }
 
         [Required]
+        [DisplayName("Villa")]
         public int VillaId { get; set; }
 
-		public VillaDTO Villa { get; set; }
+        public VillaDTO Villa { get; set; }
 
-		public string SpecialDetails { get; set; }
+        [DisplayName("Special Details")]
+        public string SpecialDetails { get; set; }
         
     }
 }

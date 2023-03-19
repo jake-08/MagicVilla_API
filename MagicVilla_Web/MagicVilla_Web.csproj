@@ -16,4 +16,8 @@
     <ProjectReference Include="..\MagicVilla_Utilities\MagicVilla_Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\VM\" />
+  </ItemGroup>
+
 </Project>
