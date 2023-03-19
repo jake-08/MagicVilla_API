@@ -16,6 +16,12 @@ builder.Services.AddHttpClient<IVillaService, VillaService>();
 // Register VillaService to Dependency Injection using AddScoped
 builder.Services.AddScoped<IVillaService, VillaService>();
 
+// Add VillaNumberService HttpClient
+builder.Services.AddHttpClient<IVillaNumberService, VillaNumberService>();
+
+// Register VillaService to Dependency Injection using AddScoped
+builder.Services.AddScoped<IVillaNumberService, VillaNumberService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
