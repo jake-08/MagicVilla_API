@@ -13,7 +13,7 @@ namespace MagicVilla_API.Models
         public int VillaId { get; set; }
 
         // Navigation Property for Foreign Key
-        public Villa villa { get; set; }
+        public Villa Villa { get; set; }
 
         public string SpecialDetails { get; set; }
 

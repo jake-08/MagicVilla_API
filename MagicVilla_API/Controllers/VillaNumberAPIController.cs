@@ -44,7 +44,7 @@ namespace MagicVilla_API.Controllers
                 _logger.Log("Getting all villas", "");
 
                 // GetAsync VillaNumber List
-                IEnumerable<VillaNumber> villaNumberList = await _dbVillaNumber.GetAllAsync();
+                IEnumerable<VillaNumber> villaNumberList = await _dbVillaNumber.GetAllAsync(includeProperties: "Villa");
                 // Use AutoMapper to convert VillaNumber list to VillaNumberDTO list and return
                 _response.Result = _mapper.Map<List<VillaNumberDTO>>(villaNumberList);
                 _response.StatusCode = HttpStatusCode.OK;
@@ -76,7 +76,7 @@ namespace MagicVilla_API.Controllers
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-                var villaNumber = await _dbVillaNumber.GetAsync(villaNo => villaNo.VillaNo == id);
+                var villaNumber = await _dbVillaNumber.GetAsync(villaNo => villaNo.VillaNo == id, includeProperties: "Villa");
                 if (villaNumber == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;

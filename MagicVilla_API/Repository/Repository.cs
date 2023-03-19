@@ -12,9 +12,12 @@ namespace MagicVilla_API.Repository
         public Repository(ApplicationDbContext db)
         {
             _db = db;
+            //_db.VillaNumbers.Include(villaNumber => villaNumber.Villa).ToList();
             dbSet = _db.Set<T>();
         }
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
+
+        // "Villa,VillaSpecial"
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperites = null)
         {
             // when using IQueryable, it doesn't get executed straight away 
             IQueryable<T> query = dbSet;
@@ -24,22 +27,41 @@ namespace MagicVilla_API.Repository
                 query = query.Where(filter);
             }
 
+            if (includeProperites != null)
+            {
+                foreach (var includeProp in includeProperites.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
             // At this point, the query will be executed. ToList() causes immediate execution. 
             return await query.ToListAsync();
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
+        public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true, string? includeProperites = null)
         {
             IQueryable<T> query = dbSet;
+
             if (!tracked)
             {
                 query = query.AsNoTracking();
             }
+
             if (filter != null)
             {
                 query = query.Where(filter);
             }
-            return await query.FirstOrDefaultAsync();
+
+			if (includeProperites != null)
+			{
+				foreach (var includeProp in includeProperites.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+				{
+					query = query.Include(includeProp);
+				}
+			}
+
+			return await query.FirstOrDefaultAsync();
         }
 
         public async Task CreateAsync(T entity)

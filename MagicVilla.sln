@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicVilla_VillaAPI", "MagicVilla_VillaAPI\MagicVilla_VillaAPI.csproj", "{A0B10EE5-F99F-4739-9A1E-6EC2EF1D8EDB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicVilla_Web", "MagicVilla_Web\MagicVilla_Web.csproj", "{DED3BC0B-2531-4ACE-9391-67B791ECE9AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicVilla_Utilities", "MagicVilla_Utilities\MagicVilla_Utilities.csproj", "{342C7C42-07F2-48D5-B8A6-67C9376EACAD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicVilla_API", "MagicVilla_API\MagicVilla_API.csproj", "{61BE9B88-654D-4EA2-8E05-3C8B19D3466C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A0B10EE5-F99F-4739-9A1E-6EC2EF1D8EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0B10EE5-F99F-4739-9A1E-6EC2EF1D8EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0B10EE5-F99F-4739-9A1E-6EC2EF1D8EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0B10EE5-F99F-4739-9A1E-6EC2EF1D8EDB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DED3BC0B-2531-4ACE-9391-67B791ECE9AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DED3BC0B-2531-4ACE-9391-67B791ECE9AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DED3BC0B-2531-4ACE-9391-67B791ECE9AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DED3BC0B-2531-4ACE-9391-67B791ECE9AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{342C7C42-07F2-48D5-B8A6-67C9376EACAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{342C7C42-07F2-48D5-B8A6-67C9376EACAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{342C7C42-07F2-48D5-B8A6-67C9376EACAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{342C7C42-07F2-48D5-B8A6-67C9376EACAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61BE9B88-654D-4EA2-8E05-3C8B19D3466C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61BE9B88-654D-4EA2-8E05-3C8B19D3466C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61BE9B88-654D-4EA2-8E05-3C8B19D3466C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61BE9B88-654D-4EA2-8E05-3C8B19D3466C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -211,7 +211,7 @@ namespace MagicVilla_API.Controllers
                 return BadRequest(_response);
             }
 
-            // Add AsNoTracking for EF not to track the model, otherwise update wouldn't work 
+            // Add AsNoTracking for EF not to track the model, otherwise update wouldn't work due to data mapping
             var villa = await _dbVilla.GetAsync(villa => villa.Id == id, tracked: false);
 
             VillaUpdateDTO villaDTO = _mapper.Map<VillaUpdateDTO>(villa);
