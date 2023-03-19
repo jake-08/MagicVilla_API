@@ -1,9 +1,9 @@
-﻿using MagicVilla_VillaAPI.Data;
-using MagicVilla_VillaAPI.Repository.IRepository;
+﻿using MagicVilla_API.Data;
+using MagicVilla_API.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace MagicVilla_VillaAPI.Repository
+namespace MagicVilla_API.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -12,7 +12,7 @@ namespace MagicVilla_VillaAPI.Repository
         public Repository(ApplicationDbContext db)
         {
             _db = db;
-            this.dbSet = _db.Set<T>();
+            dbSet = _db.Set<T>();
         }
         public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
         {

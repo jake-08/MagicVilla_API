@@ -1,8 +1,8 @@
-using MagicVilla_VillaAPI;
-using MagicVilla_VillaAPI.Data;
-using MagicVilla_VillaAPI.Logging;
-using MagicVilla_VillaAPI.Repository;
-using MagicVilla_VillaAPI.Repository.IRepository;
+using MagicVilla_API;
+using MagicVilla_API.Data;
+using MagicVilla_API.Logging;
+using MagicVilla_API.Repository;
+using MagicVilla_API.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 

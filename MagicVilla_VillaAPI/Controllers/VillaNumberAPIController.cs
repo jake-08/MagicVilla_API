@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
-using MagicVilla_VillaAPI.Logging;
-using MagicVilla_VillaAPI.Models;
-using MagicVilla_VillaAPI.Models.Dto;
-using MagicVilla_VillaAPI.Repository.IRepository;
+using MagicVilla_API.Logging;
+using MagicVilla_API.Models;
+using MagicVilla_API.Models.Dto;
+using MagicVilla_API.Repository.IRepository;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace MagicVilla_VillaAPI.Controllers
+namespace MagicVilla_API.Controllers
 {
     [Route("api/VillaNumberAPI")]
-    [ApiController] 
+    [ApiController]
     public class VillaNumberAPIController : ControllerBase
     {
         //private readonly ILogger<VillaAPIController> _logger;
@@ -31,7 +31,7 @@ namespace MagicVilla_VillaAPI.Controllers
             _dbVillaNumber = dbVillaNumber;
             _dbVilla = dbVilla;
             _mapper = mapper;
-            this._response = new();
+            _response = new();
         }
 
         [HttpGet]
@@ -162,7 +162,7 @@ namespace MagicVilla_VillaAPI.Controllers
                 VillaNumber villaNumber = _mapper.Map<VillaNumber>(updateDTO);
 
                 await _dbVillaNumber.UpdateAsync(villaNumber);
-                _response.StatusCode = HttpStatusCode.Ok;
+                _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
 
                 return Ok(_response);

@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using MagicVilla_VillaAPI.Logging;
-using MagicVilla_VillaAPI.Models;
-using MagicVilla_VillaAPI.Models.Dto;
-using MagicVilla_VillaAPI.Repository.IRepository;
+using MagicVilla_API.Logging;
+using MagicVilla_API.Models;
+using MagicVilla_API.Models.Dto;
+using MagicVilla_API.Repository.IRepository;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace MagicVilla_VillaAPI.Controllers
+namespace MagicVilla_API.Controllers
 {
     //[Route("api/[controller]")]
     [Route("api/VillaAPI")]
@@ -28,7 +28,7 @@ namespace MagicVilla_VillaAPI.Controllers
             _logger = logger;
             _dbVilla = dbVilla;
             _mapper = mapper;
-            this._response = new();
+            _response = new();
         }
 
         [HttpGet]
