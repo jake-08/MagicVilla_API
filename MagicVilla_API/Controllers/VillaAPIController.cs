@@ -33,7 +33,6 @@ namespace MagicVilla_API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -62,7 +61,6 @@ namespace MagicVilla_API.Controllers
 
         // Gave the Name Attribute because CreateVilla's CreatedAtRoute function wants to redirect to this route
         [HttpGet("{id:int}", Name = "GetVilla")]
-        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
