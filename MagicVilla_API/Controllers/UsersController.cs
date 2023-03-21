@@ -6,8 +6,10 @@ using System.Net;
 
 namespace MagicVilla_API.Controllers
 {
-    [Route("api/UsersAuth")]
+    [Route("api/v{version:apiVersion}/UsersAuth")]
     [ApiController]
+    // This API will remain neutral and not dependent on any versions
+    [ApiVersionNeutral]
     public class UsersController : Controller
     {
         private IUserRepository _userRepository;

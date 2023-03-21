@@ -9,12 +9,14 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Net;
+using System.Runtime.CompilerServices;
 
 namespace MagicVilla_API.Controllers
 {
-    [Route("api/VillaNumberAPI")]
+    [Route("api/v{version:apiVersion}/VillaNumberAPI")]
     [ApiController]
-    public class VillaNumberAPIController : ControllerBase
+    [ApiVersion("1.0")]
+    public class VillaNumberAPIv1Controller : ControllerBase
     {
         //private readonly ILogger<VillaAPIController> _logger;
         private readonly ILogging _logger; // Custom Logger
@@ -27,7 +29,7 @@ namespace MagicVilla_API.Controllers
 
         protected APIResponse _response;
 
-        public VillaNumberAPIController(ILogging logger, IVillaNumberRepository dbVillaNumber, IVillaRepository dbVilla, IMapper mapper)
+        public VillaNumberAPIv1Controller(ILogging logger, IVillaNumberRepository dbVillaNumber, IVillaRepository dbVilla, IMapper mapper)
         {
             _logger = logger;
             _dbVillaNumber = dbVillaNumber;
@@ -38,6 +40,7 @@ namespace MagicVilla_API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        //[MapToApiVersion("1.0")] // Only if there are two API Versions in the controller
         public async Task<ActionResult<APIResponse>> GetVillaNumbers()
         {
             try

@@ -11,8 +11,10 @@ using System.Net;
 namespace MagicVilla_API.Controllers
 {
     //[Route("api/[controller]")]
-    [Route("api/VillaAPI")]
-    [ApiController] // ApiController attributes checkes the DataAnnotation attributes in the VillaDTO model class 
+    [Route("api/v{version:apiVersion}/VillaAPI")]
+    // ApiController attributes checkes the DataAnnotation attributes in the VillaDTO model class
+    [ApiController]
+    [ApiVersion("1.0")]
     public class VillaAPIController : ControllerBase
     {
         //private readonly ILogger<VillaAPIController> _logger;

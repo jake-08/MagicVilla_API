@@ -69,7 +69,7 @@ namespace MagicVilla_Web.Services
                     // Convert apiContent to ApiResponse Object
                     APIResponse ApiResponse = JsonConvert.DeserializeObject<APIResponse>(apiContent);
                     // Check if it is a Bad Request
-                    if (apiResponse.StatusCode == HttpStatusCode.BadRequest || apiResponse.StatusCode == HttpStatusCode.NotFound)
+                    if (ApiResponse != null && (apiResponse.StatusCode == HttpStatusCode.BadRequest || apiResponse.StatusCode == HttpStatusCode.NotFound))
                     {
                         // Update the ApiResponse Object to Bad Request and Success false
                         ApiResponse.StatusCode = HttpStatusCode.BadRequest;
