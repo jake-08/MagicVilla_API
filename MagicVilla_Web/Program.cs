@@ -47,6 +47,7 @@ builder.Services.AddAuthentication(options =>
         options.AccessDeniedPath = "/Auth/AccessDenied";
         options.SlidingExpiration = true;
     });
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(10);

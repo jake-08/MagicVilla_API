@@ -1,9 +1,11 @@
 using MagicVilla_API;
 using MagicVilla_API.Data;
 using MagicVilla_API.Logging;
+using MagicVilla_API.Models;
 using MagicVilla_API.Repository;
 using MagicVilla_API.Repository.IRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -18,6 +20,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
 });
+
+// Add Identity to the Services
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Add AutoMapper Configuration to the Services
 builder.Services.AddAutoMapper(typeof(MappingConfig));
@@ -73,10 +79,16 @@ builder.Services.AddAuthentication(options =>
 // Register Custom ILogging Service
 builder.Services.AddSingleton<ILogging, LoggingV2>();
 
+// Enable Caching in the Application to minimise multiple database requests
+builder.Services.AddResponseCaching();
+
 builder.Services.AddControllers(option =>
 {
-    // Return false if the Http Request is not in acceptable format
-    //option.ReturnHttpNotAcceptable = true;
+    option.CacheProfiles.Add("Default120",
+        new CacheProfile()
+        {
+            Duration = 120
+        });
 }).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
