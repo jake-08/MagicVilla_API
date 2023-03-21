@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Text.Json;
 
 namespace MagicVilla_API.Controllers
 {
@@ -35,21 +36,44 @@ namespace MagicVilla_API.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 120)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<APIResponse>> GetVillas()
+        public async Task<ActionResult<APIResponse>> GetVillas(
+            [FromQuery(Name = "Filter Occupancy")]int? occupancy, 
+            [FromQuery(Name = "Search Villa")] string? search,
+            int pageSize = 0, int pageNumber = 1)
         {
             try
             {
                 //_logger.LogInformation("Getting all villas");
                 _logger.Log("Getting all villas", "");
 
-                // GetAsync Villa List
-                IEnumerable<Villa> villaList = await _dbVilla.GetAllAsync();
+                IEnumerable<Villa> villaList;
+                if (occupancy > 0)
+                {
+                    villaList = await _dbVilla.GetAllAsync(villa => villa.Occupancy == occupancy, pageSize: 100, pageNumber: 1);
+                }
+                else
+                {
+                    // GetAsync Villa List
+                    villaList = await _dbVilla.GetAllAsync(pageSize: pageSize, pageNumber: pageNumber);
+                }
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    villaList = villaList.Where(villa => villa.Amenity.ToLower().Contains(search) || villa.Name.ToLower().Contains(search));    
+                }
+
+                // Add Pagination object to response header
+                Pagination pagination = new () { PageNumber = pageNumber, PageSize = pageSize };
+                Response.Headers.Add("Pagination", JsonSerializer.Serialize(pagination));
+
                 // Use AutoMapper to convert Villa to VillaDTO object and return
                 _response.Result = _mapper.Map<List<VillaDTO>>(villaList);
                 _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
@@ -63,6 +87,8 @@ namespace MagicVilla_API.Controllers
 
         // Gave the Name Attribute because CreateVilla's CreatedAtRoute function wants to redirect to this route
         [HttpGet("{id:int}", Name = "GetVilla")]
+        //[ResponseCache(Duration = 120)]
+        [ResponseCache(CacheProfileName = "Default120")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -79,17 +105,20 @@ namespace MagicVilla_API.Controllers
                     _logger.Log("Get Villa Error with Id " + id, "error");
 
                     _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
                     return BadRequest(_response);
                 }
                 var villa = await _dbVilla.GetAsync(villa => villa.Id == id);
                 if (villa == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.IsSuccess = false;
                     return NotFound(_response);
                 }
 
                 _response.Result = _mapper.Map<VillaDTO>(villa);
                 _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
@@ -104,6 +133,7 @@ namespace MagicVilla_API.Controllers
 
         [HttpPost]
         [Authorize(Roles = "admin")]
+        [ResponseCache(CacheProfileName = "Default120")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -125,11 +155,15 @@ namespace MagicVilla_API.Controllers
                 {
                     // Add Error message to ModelState
                     ModelState.AddModelError("ErrorMessages", "Villa already Exists");
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
                     return BadRequest(ModelState);
                 }
 
                 if (createDTO == null)
                 {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
                     return BadRequest(createDTO);
                 }
                 // if there is id, it is not a create request, it is an update request
@@ -155,6 +189,7 @@ namespace MagicVilla_API.Controllers
                 await _dbVilla.CreateAsync(villa);
                 _response.Result = _mapper.Map<VillaDTO>(villa);
                 _response.StatusCode = HttpStatusCode.Created;
+                _response.IsSuccess = true;
 
                 return CreatedAtRoute("GetVilla", new { id = villa.Id }, _response);
             }
@@ -168,6 +203,7 @@ namespace MagicVilla_API.Controllers
 
         [HttpPut("{id:int}")]
         [Authorize(Roles = "admin")]
+        [ResponseCache(CacheProfileName = "Default120")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -179,6 +215,7 @@ namespace MagicVilla_API.Controllers
                 if (updateDTO == null || id != updateDTO.Id)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
                     return BadRequest(_response);
                 }
                 //var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
@@ -214,6 +251,7 @@ namespace MagicVilla_API.Controllers
         }
 
         [HttpPatch("{id:int}")]
+        [ResponseCache(CacheProfileName = "Default120")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -223,6 +261,7 @@ namespace MagicVilla_API.Controllers
             if (patchDTO == null || id == 0)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
                 return BadRequest(_response);
             }
 
@@ -246,6 +285,8 @@ namespace MagicVilla_API.Controllers
 
             if (villa == null)
             {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
                 return BadRequest();
             }
 
@@ -270,12 +311,18 @@ namespace MagicVilla_API.Controllers
 
             if (!ModelState.IsValid)
             {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
                 return BadRequest(ModelState);
             }
+
+            _response.StatusCode = HttpStatusCode.NoContent;
+            _response.IsSuccess = true;
             return NoContent();
         }
 
         [HttpDelete("{id:int}")]
+        [ResponseCache(CacheProfileName = "Default120")]
         [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -289,6 +336,7 @@ namespace MagicVilla_API.Controllers
                 if (id == 0)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
                     return BadRequest(_response);
                 }
 
@@ -297,6 +345,7 @@ namespace MagicVilla_API.Controllers
                 if (villa == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.IsSuccess = false;
                     return NotFound(_response);
                 }
 

@@ -17,7 +17,7 @@ namespace MagicVilla_API.Repository
         }
 
         // "Villa,VillaSpecial"
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperites = null)
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperites = null, int pageSize = 0, int pageNumber = 1)
         {
             // when using IQueryable, it doesn't get executed straight away 
             IQueryable<T> query = dbSet;
@@ -25,6 +25,20 @@ namespace MagicVilla_API.Repository
             if (filter != null)
             {
                 query = query.Where(filter);
+            }
+
+            // Pagination 
+            if (pageSize > 0)
+            {
+                // Max 100 items 
+                if (pageSize > 100)
+                {
+                    pageSize = 100;
+                }
+                // pageNumber = 2 | pageSize = 5
+                // Skip(5*(2-1).Take(5) 
+                // Skip(5).Take(5) -> Skip the first five and take the next 5
+                query = query.Skip(pageSize * (pageNumber - 1)).Take(pageSize);
             }
 
             if (includeProperites != null)
