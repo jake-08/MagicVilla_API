@@ -40,7 +40,7 @@ namespace MagicVilla_Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin", AuthenticationSchemes = "Cookies")]
         public async Task<IActionResult> CreateVilla(VillaCreateDTO model)
         {
             if (ModelState.IsValid)
