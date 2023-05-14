@@ -4,6 +4,7 @@ using MagicVilla_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicVilla_VillaAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230513120526_ChangeSchemaName")]
+    partial class ChangeSchemaName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,7 +164,7 @@ namespace MagicVilla_VillaAPI.Migrations
                         {
                             Id = 1,
                             Amenity = "Free Drinks",
-                            CreatedDate = new DateTime(2023, 5, 13, 22, 9, 33, 778, DateTimeKind.Local).AddTicks(5303),
+                            CreatedDate = new DateTime(2023, 5, 13, 22, 5, 26, 430, DateTimeKind.Local).AddTicks(2469),
                             Details = "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                             ImageUrl = "https://cdn.pixabay.com/photo/2016/03/28/09/34/bedroom-1285156__340.jpg",
                             Name = "Royal Villa",
@@ -174,7 +177,7 @@ namespace MagicVilla_VillaAPI.Migrations
                         {
                             Id = 2,
                             Amenity = "Free Beer",
-                            CreatedDate = new DateTime(2023, 5, 13, 22, 9, 33, 778, DateTimeKind.Local).AddTicks(5348),
+                            CreatedDate = new DateTime(2023, 5, 13, 22, 5, 26, 430, DateTimeKind.Local).AddTicks(2515),
                             Details = "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                             ImageUrl = "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594__340.jpg",
                             Name = "Premium Pool Villa",
@@ -187,7 +190,7 @@ namespace MagicVilla_VillaAPI.Migrations
                         {
                             Id = 3,
                             Amenity = "Free Snacks",
-                            CreatedDate = new DateTime(2023, 5, 13, 22, 9, 33, 778, DateTimeKind.Local).AddTicks(5350),
+                            CreatedDate = new DateTime(2023, 5, 13, 22, 5, 26, 430, DateTimeKind.Local).AddTicks(2518),
                             Details = "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                             ImageUrl = "https://cdn.pixabay.com/photo/2020/10/18/09/16/bedroom-5664221__340.jpg",
                             Name = "Luxury Pool Villa",
@@ -200,7 +203,7 @@ namespace MagicVilla_VillaAPI.Migrations
                         {
                             Id = 4,
                             Amenity = "Free Massage",
-                            CreatedDate = new DateTime(2023, 5, 13, 22, 9, 33, 778, DateTimeKind.Local).AddTicks(5352),
+                            CreatedDate = new DateTime(2023, 5, 13, 22, 5, 26, 430, DateTimeKind.Local).AddTicks(2520),
                             Details = "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                             ImageUrl = "https://cdn.pixabay.com/photo/2016/04/15/11/46/bedroom-1330846__340.jpg",
                             Name = "Diamond Villa",
@@ -213,7 +216,7 @@ namespace MagicVilla_VillaAPI.Migrations
                         {
                             Id = 5,
                             Amenity = "Free Drinks",
-                            CreatedDate = new DateTime(2023, 5, 13, 22, 9, 33, 778, DateTimeKind.Local).AddTicks(5354),
+                            CreatedDate = new DateTime(2023, 5, 13, 22, 5, 26, 430, DateTimeKind.Local).AddTicks(2522),
                             Details = "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                             ImageUrl = "https://cdn.pixabay.com/photo/2019/08/19/13/58/bed-4416515__340.jpg",
                             Name = "Diamond Pool Villa",

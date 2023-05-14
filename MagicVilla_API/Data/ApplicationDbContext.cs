@@ -17,6 +17,9 @@ namespace MagicVilla_API.Data
         // Insert Data on Database creation
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Set Scehema Name e.g. -> magicvilla.Villas
+            modelBuilder.HasDefaultSchema("magicvilla");
+
             // For "The entity type 'IdentityUserLogin<string>' requires a primary key to be defined." error message while migration
             base.OnModelCreating(modelBuilder);
 
